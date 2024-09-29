@@ -4,6 +4,8 @@ import {
   CreateExternalTransactionDto,
   CreateInternalTransactionDto,
   CreateWalletDto,
+  EstimateFeeDto, // DTO для запроса расчета комиссии
+  FeeDto, // DTO для ответа с расчетной комиссией
   TransactionDto, // DTO для транзакций
   WalletDto,
 } from './wallet.types'
@@ -37,6 +39,15 @@ const walletApi = baseApi.injectEndpoints({
       }),
     }),
 
+    // Эндпойнт для расчета комиссии
+    estimateTransactionFee: builder.mutation<FeeDto, EstimateFeeDto>({
+      query: body => ({
+        body,
+        method: 'POST',
+        url: '/transactions/estimate-fee',
+      }),
+    }),
+
     // Эндпойнт для получения всех транзакций пользователя
     getUserTransactions: builder.query<TransactionDto[], number>({
       query: userId => ({
@@ -59,6 +70,7 @@ export const {
   useCreateExternalTransactionMutation,
   useCreateInternalTransactionMutation,
   useCreateWalletMutation,
+  useEstimateTransactionFeeMutation, // Хук для расчета комиссии
   useGetUserTransactionsQuery,
   useGetUserWalletsQuery,
 } = walletApi

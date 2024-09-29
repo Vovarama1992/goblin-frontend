@@ -30,14 +30,23 @@ export type CreateExternalTransactionDto = {
 }
 
 export type TransactionDto = {
-  amount: number // Сумма перевода
-  createdAt: string // Дата создания транзакции
+  amount: number // сумма
+  fromAddress: string // адрес отправителя
+  hash: string
+  id: string // или другой уникальный идентификатор транзакции
+  result: 'FAILURE' | 'SUCCESS' // результат транзакции
+  timestamp: string // временная метка транзакции
+  toAddress: string // адрес получателя
+  tokenInfo: any // название токена
+}
 
-  externalAddress?: string // Внешний адрес получателя (если внешний перевод)
+export type EstimateFeeDto = {
+  amount: number // Сумма перевода
   fromWalletId: number // ID кошелька-отправителя
-  id: number // Уникальный идентификатор транзакции
-  status: 'COMPLETED' | 'FAILED' | 'PENDING' // Статус транзакции
-  toWalletId?: number // ID кошелька-получателя (если внутренний перевод)
-  type: 'EXTERNAL_OUTGOING' | 'INTERNAL' // Тип транзакции
-  updatedAt: string // Дата последнего обновления
+  recipientAddress: string // Адрес получателя (внешний или внутренний)
+}
+
+// DTO для ответа с расчетной комиссией
+export type FeeDto = {
+  feeInTrx: number // Комиссия в TRX
 }
